@@ -72,10 +72,10 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.5 }) {
 
       // TODO: in the copy, flip this cell and the cells around it
       newBoard[y][x] = flipCell(y, x, newBoard)
-      newBoard[y][x+1] = flipCell(y, x, newBoard)
-      newBoard[y][x-1] = flipCell(y, x, newBoard)
-      newBoard[y+1][x] = flipCell(y, x, newBoard)
-      newBoard[y-1][x] = flipCell(y, x, newBoard)
+      newBoard[y][x+1] = flipCell(y, x+1, newBoard)
+      newBoard[y][x-1] = flipCell(y, x-1, newBoard)
+      newBoard[y+1][x] = flipCell(y+1, x, newBoard)
+      newBoard[y-1][x] = flipCell(y-1, x, newBoard)
 
 
       // TODO: return the copy
@@ -84,11 +84,23 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.5 }) {
   }
 
   // if the game is won, just show a winning msg & render nothing else
-  { hasWon(board) && return <p>You win!</p>}
+  return (
+    <div className="Board">
+      { hasWon(board) && <h1>You win!</h1>}
+      { !hasWon(board) && board.map((row, y) => row.map(
+          (c, x) => (
+            <Cell
+              key={`${y}${x}`}
+              flipCellsAroundMe={() => {flipCellsAround(`${y}-${x}`)}}
+              isLit={c}/>
+        ))
+      )}
+    </div>
+
+  )
   // TODO
 
   // make table board
-  {!hasWon(board) && }
 
   // TODO
 }
